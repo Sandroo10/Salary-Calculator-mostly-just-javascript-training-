@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Salary Calculator</title>
+<link rel="stylesheet" href="./Calc.css" type="text/css" />
+
+</head>
+<body>
+  <h1 style="text-align: center;">Salary Calculator</h1>
+<div class="container">
+  <div class="left">
+    <label for="age">Age:</label>
+    <input type="number" id="age" min="0">
+    <label for="yearsOfWorking">Years of Working:</label>
+    <input type="number" id="yearsOfWorking" min="0">
+    <label for="job">Job:</label>
+    <input type="text" id="job">
+    <label for="hoursPerDay">Hours per Day:</label>
+    <input type="number" id="hoursPerDay" min="0">
+    <label for="workdaysPerWeek">Workdays per Week:</label>
+    <input type="number" id="workdaysPerWeek" min="0">
+    <label for="netSalary">Net Salary:</label>
+    <input type="number" id="netSalary" min="0">
+    <label for="calculationType">Calculation Type:</label>
+    <select id="calculationType">
+      <option value="hourly">Hourly</option>
+      <option value="daily">Daily</option>
+      <option value="monthly">Monthly</option>
+      <option value="yearly">Yearly</option>
+    </select>
+    <button onclick="calculateSalary()">Create Salary Overview</button>
+  </div>
+  <div class="right">
+    <div id="output"></div>
+  </div>
+</div>
+
+<script>
+function calculateSalary() {
+  var age = parseFloat(document.getElementById('age').value);
+  var yearsOfWorking = parseFloat(document.getElementById('yearsOfWorking').value);
+  var job = document.getElementById('job').value;
+  var hoursPerDay = parseFloat(document.getElementById('hoursPerDay').value);
+  var workdaysPerWeek = parseFloat(document.getElementById('workdaysPerWeek').value);
+  var netSalary = parseFloat(document.getElementById('netSalary').value);
+  var calculationType = document.getElementById('calculationType').value;
+  
+  var totalHours = hoursPerDay * workdaysPerWeek * 4.33 * 12; // Assuming 4.33 weeks per month
+  var hourlyRate = netSalary / totalHours;
+  var dailyRate = hourlyRate * hoursPerDay;
+  var monthlyRate = netSalary;
+  var yearlyRate = monthlyRate * 12;
+  
+  var output = document.getElementById('output');
+  output.innerHTML = `
+    <h3>On your job as a ${job} ,here is your Salary Breakdown</h3>
+    <p>Hourly Rate: $${hourlyRate.toFixed(2)}</p>
+    <p>Daily Rate: $${dailyRate.toFixed(2)}</p>
+    <p>Monthly Rate: $${monthlyRate.toFixed(2)}</p>
+    <p>Yearly Rate: $${yearlyRate.toFixed(2)}</p>
+    <h3>Total Earnings</h3>
+    <p>Based on ${yearsOfWorking} years of working: $${(yearlyRate * yearsOfWorking).toFixed(2)}</p>
+  `;
+}
+</script>
+</body>
+</html>
